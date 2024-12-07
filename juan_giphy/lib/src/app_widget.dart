@@ -12,6 +12,10 @@ class AppWidget extends StatelessWidget {
       locale: const Locale("pt", "BR"),
       theme: ThemeData(
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: const AppBarTheme(
+          color: Colors.black,
+        ),
       ),
       localizationsDelegates: const [
         DefaultWidgetsLocalizations.delegate,
