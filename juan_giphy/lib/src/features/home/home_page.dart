@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = HomeController();
   final searchFieldController = TextEditingController();
+  final searchFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             TextField(
               controller: searchFieldController,
+              focusNode: searchFocusNode,
               onSubmitted: _onSearchFieldSubmit,
               decoration: InputDecoration(
                 iconColor: Colors.white,
@@ -75,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
 
-                if (connectionState == ConnectionState.none) {
+                if (connectionState == ConnectionState.none || snapshot.data == null) {
                   return const Expanded(
                     child: Center(
                       child: ErrorCard(
@@ -85,7 +87,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
 
-                final gifList = snapshot.requireData;
+                final gifList = snapshot.requireData!;
 
                 return Expanded(
                   child: Padding(
@@ -134,7 +136,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onDeleteTextPressed() {
-    _closeKeyboard();
+    _closeSearchFieldKeyboard();
     searchFieldController.clear();
 
     setState(() {
@@ -150,7 +152,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _closeKeyboard() {
-    FocusScope.of(context).unfocus();
+  void _closeSearchFieldKeyboard() {
+    searchFocusNode.unfocus();
   }
 }

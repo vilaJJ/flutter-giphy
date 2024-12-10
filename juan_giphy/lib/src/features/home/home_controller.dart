@@ -8,12 +8,16 @@ class HomeController {
 
   String? get searchText => _searchText;
 
-  Future<List<GiphyResourceModel>> getGifs() async {
-    if (_searchText?.trim().isNotEmpty == true) {
-      return await giphyResourceRepository.getBySearch(_searchText!);
-    }
+  Future<List<GiphyResourceModel>?> getGifs() async {
+    try {
+      if (searchText?.trim().isNotEmpty == true) {
+        return await giphyResourceRepository.getBySearch(searchText!);
+      }
 
-    return await giphyResourceRepository.getTrending();
+      return await giphyResourceRepository.getTrending();
+    } catch (_) {
+      return null;
+    }
   }
 
   void setSearchText(String? text) {

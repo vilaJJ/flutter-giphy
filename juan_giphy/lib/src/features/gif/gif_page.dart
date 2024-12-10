@@ -27,9 +27,19 @@ class _GifPageState extends State<GifPage> {
           url: widget.gif.url,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onSharePressed,
-        child: const Icon(Icons.share_rounded),
+      floatingActionButton: ValueListenableBuilder(
+        valueListenable: controller.isSharing,
+        builder: (context, isSharing, child) {
+          return FloatingActionButton(
+            onPressed: isSharing ? null : _onSharePressed,
+            child: isSharing
+                ? const RefreshProgressIndicator(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  )
+                : const Icon(Icons.share_rounded),
+          );
+        },
       ),
     );
   }

@@ -4,22 +4,22 @@ import 'dart:convert';
 class GiphyResourceModel {
   GiphyResourceModel({
     required this.id,
+    required this.title,
     required this.username,
     required this.url,
-    this.usernamePhotoUrl,
   });
 
   final String id;
+  final String title;
   final String username;
   final String url;
-  final String? usernamePhotoUrl;
 
   factory GiphyResourceModel.fromMap(Map<String, dynamic> map) {
     return GiphyResourceModel(
       id: map['id'] as String,
+      title: map['title'] as String,
       username: map['username'] as String,
       url: map['images']['original']['url'] as String,
-      usernamePhotoUrl: map['user']?['avatar_url'] as String?,
     );
   }
 
@@ -38,5 +38,9 @@ class GiphyResourceModel {
         return GiphyResourceModel.fromMap(map);
       },
     );
+  }
+
+  String get fileTitle {
+    return title.isEmpty ? id : title;
   }
 }
