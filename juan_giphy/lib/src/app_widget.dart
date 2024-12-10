@@ -15,6 +15,7 @@ class AppWidget extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         appBarTheme: const AppBarTheme(
           color: Colors.black,
+          foregroundColor: Colors.white,
         ),
       ),
       localizationsDelegates: const [

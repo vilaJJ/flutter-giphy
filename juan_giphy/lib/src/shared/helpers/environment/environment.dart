@@ -8,7 +8,8 @@ class Environment {
 
   static String get giphyApiKey {
     return dotenv.get(
-      Platform.isAndroid ? DotEnvConstants.giphyAndroidApiKey : DotEnvConstants.giphyIosApiKey,
+      // TODO: Reverter
+      !Platform.isAndroid ? DotEnvConstants.giphyAndroidApiKey : DotEnvConstants.giphyIosApiKey,
     );
   }
 }

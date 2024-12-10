@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:juan_giphy/src/features/gif/gif_page.dart';
 import 'package:juan_giphy/src/features/home/home_controller.dart';
+import 'package:juan_giphy/src/shared/models/giphy/giphy_resource_model.dart';
 import 'package:juan_giphy/src/shared/widgets/error_card.dart';
 import 'package:juan_giphy/src/shared/widgets/gif_card.dart';
 import 'package:juan_giphy/src/shared/widgets/giphy_developers_logo.dart';
@@ -100,9 +102,12 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final gif = gifList[index];
 
-                        return GifCard(
-                          url: gif.url,
-                          fit: BoxFit.cover,
+                        return InkWell(
+                          onTap: () async => await _onGifPressed(gif),
+                          child: GifCard(
+                            url: gif.url,
+                            fit: BoxFit.cover,
+                          ),
                         );
                       },
                     ),
@@ -135,6 +140,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       controller.clearSearchText();
     });
+  }
+
+  Future<void> _onGifPressed(GiphyResourceModel gif) async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => GifPage(gif),
+      ),
+    );
   }
 
   void _closeKeyboard() {

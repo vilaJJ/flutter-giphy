@@ -20,7 +20,10 @@ class LoadingCard extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const CircularProgressIndicator(),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 4.0),
+              child: CircularProgressIndicator(),
+            ),
             Text(text),
           ],
         ),
