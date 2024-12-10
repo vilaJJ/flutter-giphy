@@ -12,7 +12,7 @@ class ApiGiphyResourceRepository implements GiphyResourceRepository {
     int offset = 0,
   }) async {
     final uri = _helper.getUri(
-      "search",
+      "v1/gifs/search",
       parameters: {
         "api_key": _helper.apiKey,
         "q": text,
@@ -31,7 +31,7 @@ class ApiGiphyResourceRepository implements GiphyResourceRepository {
     int offset = 0,
   }) async {
     final uri = _helper.getUri(
-      "trending",
+      "v1/gifs/trending",
       parameters: {
         "api_key": _helper.apiKey,
         "limit": "$limit",

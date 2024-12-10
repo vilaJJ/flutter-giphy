@@ -19,7 +19,7 @@ class GiphyResourceModel {
       id: map['id'] as String,
       username: map['username'] as String,
       url: map['images']['original']['url'] as String,
-      usernamePhotoUrl: map['user']['avatar_url'] as String?,
+      usernamePhotoUrl: map['user']?['avatar_url'] as String?,
     );
   }
 
@@ -28,12 +28,13 @@ class GiphyResourceModel {
       );
 
   static List<GiphyResourceModel> getListFromJson(String source) {
-    final jsonConverted = json.decode(source) as List<Map<String, dynamic>>;
+    final jsonConverted = json.decode(source) as Map<String, dynamic>;
+    final list = jsonConverted["data"] as List<dynamic>;
 
     return List.generate(
-      jsonConverted.length,
+      list.length,
       (index) {
-        final map = jsonConverted[index];
+        final map = list[index];
         return GiphyResourceModel.fromMap(map);
       },
     );

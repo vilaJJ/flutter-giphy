@@ -13,7 +13,7 @@ class GiphyApiHelper extends ApiHelper {
 
   factory GiphyApiHelper.gifs() {
     return GiphyApiHelper._(
-      baseUrl: "${WebResourcesConstants.giphyApiBaseUrl}/gifs",
+      baseUrl: WebResourcesConstants.giphyApiBaseUrl,
     );
   }
 }
