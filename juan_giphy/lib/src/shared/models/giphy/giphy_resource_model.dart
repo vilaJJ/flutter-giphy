@@ -6,33 +6,36 @@ class GiphyResourceModel {
     required this.id,
     required this.username,
     required this.url,
+    this.usernamePhotoUrl,
   });
 
   final String id;
   final String username;
   final String url;
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'username': username,
-      'url': url,
-    };
-  }
+  final String? usernamePhotoUrl;
 
   factory GiphyResourceModel.fromMap(Map<String, dynamic> map) {
     return GiphyResourceModel(
       id: map['id'] as String,
       username: map['username'] as String,
-      url: map['url'] as String,
+      url: map['images']['original']['url'] as String,
+      usernamePhotoUrl: map['user']['avatar_url'] as String?,
     );
   }
-
-  String toJson() => json.encode(
-        toMap(),
-      );
 
   factory GiphyResourceModel.fromJson(String source) => GiphyResourceModel.fromMap(
         json.decode(source) as Map<String, dynamic>,
       );
+
+  static List<GiphyResourceModel> getListFromJson(String source) {
+    final jsonConverted = json.decode(source) as List<Map<String, dynamic>>;
+
+    return List.generate(
+      jsonConverted.length,
+      (index) {
+        final map = jsonConverted[index];
+        return GiphyResourceModel.fromMap(map);
+      },
+    );
+  }
 }

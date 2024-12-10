@@ -3,16 +3,26 @@ import 'package:juan_giphy/src/shared/models/giphy/giphy_resource_model.dart';
 import 'package:juan_giphy/src/shared/repositories/giphy/resources/giphy_resource_repository.dart';
 
 class ApiGiphyResourceRepository implements GiphyResourceRepository {
-  final helper = GiphyApiHelper.gifs();
+  final _helper = GiphyApiHelper.gifs();
 
   @override
   Future<List<GiphyResourceModel>> getBySearch(
     String text, {
     int limit = 25,
     int offset = 0,
-  }) {
-    // TODO: implement getBySearch
-    throw UnimplementedError();
+  }) async {
+    final uri = _helper.getUri(
+      "search",
+      parameters: {
+        "api_key": _helper.apiKey,
+        "q": text,
+        "limit": "$limit",
+        "offset": "$offset",
+      },
+    );
+
+    final response = await _helper.get(uri);
+    return GiphyResourceModel.getListFromJson(response.body);
   }
 
   @override
@@ -20,16 +30,16 @@ class ApiGiphyResourceRepository implements GiphyResourceRepository {
     int limit = 25,
     int offset = 0,
   }) async {
-    final uri = helper.getUri(
+    final uri = _helper.getUri(
       "trending",
       parameters: {
-        "api_key": "",
+        "api_key": _helper.apiKey,
         "limit": "$limit",
-        "offset": "$offset"
+        "offset": "$offset",
       },
     );
-    final response = await helper.get(uri);
-    // TODO: implement getTrending
-    throw UnimplementedError();
+
+    final response = await _helper.get(uri);
+    return GiphyResourceModel.getListFromJson(response.body);
   }
 }
